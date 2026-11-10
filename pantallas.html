@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SIMEC Bogotá — Pantallas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0D47A1;
+    --blue: #1565C0;
+    --ice: #E3F2FD;
+    --bg: #F5F7FA;
+    --ink: #1A2332;
+    --muted: #5F6368;
+    --soft: #80868B;
+    --line: #DADCE0;
+    --green: #1B7A3A;
+    --green-bg: #E7F6EC;
+    --amber: #B26A00;
+    --amber-bg: #FFF6E0;
+    --orange: #E65100;
+    --orange-bg: #FFF1E6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Inter, "Segoe UI", sans-serif;
+    background: #d5dee8;
+    color: var(--ink);
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 14px 22px; background: #0D47A1; color: white;
+  }
+  .toolbar b { font-weight: 700; letter-spacing: .2px; }
+  .toolbar span { display: block; font-size: 12px; color: #BBDEFB; font-weight: 500; }
+  .toolbar div.actions { display: flex; gap: 8px; }
+  .toolbar button {
+    border: 1px solid rgba(255,255,255,.35); background: transparent; color: white;
+    border-radius: 999px; padding: 8px 14px; font: 600 13px Inter, "Segoe UI", sans-serif; cursor: pointer;
+  }
+  .toolbar button.on { background: white; color: var(--navy); }
+  .grid { display: flex; flex-wrap: wrap; gap: 28px; padding: 28px; align-items: flex-start; }
+  .cap { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #334155; letter-spacing: .04em; }
+  .phone {
+    width: 393px; height: 852px; overflow: hidden; position: relative;
+    background: var(--bg); border-radius: 0;
+  }
+  .status {
+    position: absolute; inset: 0 0 auto 0; height: 54px; z-index: 6;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 22px 8px; font-size: 15px; font-weight: 600; color: #111;
+    pointer-events: none;
+  }
+  .island {
+    position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+    width: 118px; height: 34px; background: #000; border-radius: 20px;
+  }
+  .sigs { display: flex; align-items: center; gap: 5px; }
+  .phone.dark { background: linear-gradient(180deg, #0D47A1 0%, #1565C0 100%); color: white; }
+  .phone.dark .status { color: white; }
+  .tabs {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 76px; z-index: 5;
+    background: #fff; border-top: 1px solid #E6EAF0;
+    display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 6px 16px;
+  }
+  .tabs button {
+    border: 0; background: transparent; color: #80868B; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font: 600 10px Inter, "Segoe UI", sans-serif;
+  }
+  .tabs button.on { color: var(--blue); }
+  .homebar {
+    position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%);
+    width: 128px; height: 5px; border-radius: 99px; background: #111; z-index: 7; opacity: .85;
+  }
+  .phone.dark .homebar { background: white; }
+  .pad { height: 100%; padding: 62px 22px 88px; display: flex; flex-direction: column; }
+  h1, h2, p { margin: 0; }
+  .ico { display: block; }
+
+  /* SPLASH */
+  .splash {
+    height: 100%; padding: 72px 32px 28px; display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+  }
+  .mark { width: 168px; height: 168px; }
+  .splash h1 { margin-top: 8px; font-size: 42px; line-height: 1; font-weight: 800; letter-spacing: -1px; }
+  .splash .city { margin-top: 4px; font-size: 28px; font-weight: 600; color: #E3F2FD; }
+  .splash .sub {
+    margin-top: 12px; max-width: 280px; font-size: 16px; font-weight: 500;
+    line-height: 1.35; color: rgba(255,255,255,.9);
+  }
+  .scene { width: 220px; margin-top: 28px; }
+  .splash .msg {
+    margin-top: 22px; max-width: 270px; font-size: 14px; font-weight: 400; line-height: 1.4;
+  }
+  .dots { margin-top: 26px; display: flex; gap: 8px; }
+  .dots i {
+    width: 8px; height: 8px; border-radius: 50%; background: white; display: block;
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+  .dots i:nth-child(2) { animation-delay: .2s; }
+  .dots i:nth-child(3) { animation-delay: .4s; }
+  @keyframes pulse { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+  .splash footer, .login footer {
+    margin-top: auto; font-size: 12px; line-height: 1.45; color: #BBDEFB; font-weight: 500;
+  }
+
+  /* LOGIN */
+  .login {
+    height: 100%; padding: 68px 36px 18px; display: flex; flex-direction: column; align-items: center;
+    position: relative; background: #F5F7FA;
+  }
+  .skyline { position: absolute; left: 0; right: 0; bottom: 0; opacity: .1; pointer-events: none; }
+  .login .mark { width: 104px; height: 104px; }
+  .login h1 { margin-top: 6px; font-size: 40px; line-height: 1; font-weight: 800; color: var(--blue); letter-spacing: -1px; }
+  .login .city { font-size: 24px; font-weight: 600; color: var(--navy); }
+  .login .sub { margin: 8px 0 18px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); max-width: 280px; line-height: 1.35; }
+  .field {
+    width: 100%; height: 52px; background: white; border: 1px solid var(--line); border-radius: 12px;
+    display: flex; align-items: center; gap: 10px; padding: 0 14px; color: var(--soft); font-size: 15px;
+  }
+  .field + .field { margin-top: 10px; }
+  .field span { flex: 1; text-align: left; }
+  .rowopt {
+    width: 100%; margin: 10px 0 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); font-weight: 500; }
+  .box {
+    width: 18px; height: 18px; border-radius: 4px; background: var(--blue); color: white;
+    display: grid; place-items: center; font-size: 12px;
+  }
+  .link { border: 0; background: none; color: var(--blue); font: 600 12px Inter, sans-serif; cursor: pointer; padding: 0; }
+  .btn {
+    width: 100%; height: 52px; border: 0; border-radius: 12px; background: var(--blue); color: white;
+    font: 600 16px Inter, sans-serif; cursor: pointer;
+  }
+  .sep { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin: 14px 0; color: #9AA0A6; font-size: 13px; }
+  .sep i { height: 1px; background: #E0E3E7; display: block; }
+  .btn.ghost {
+    background: white; color: var(--blue); border: 1px solid var(--blue);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .help { margin-top: 14px; text-align: center; font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .login footer { color: #9AA0A6; text-align: center; position: relative; z-index: 1; }
+
+  /* APP CHROME */
+  .top {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+  }
+  .hello { font-size: 13px; color: var(--muted); font-weight: 500; }
+  .top h2 { font-size: 22px; font-weight: 800; letter-spacing: -.3px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--ice); color: var(--navy);
+    display: grid; place-items: center; font-weight: 800; font-size: 13px;
+  }
+  .search {
+    height: 48px; background: white; border-radius: 14px; border: 1px solid #E6EAF0;
+    display: flex; align-items: center; gap: 8px; padding: 0 14px; color: #9AA0A6; font-size: 14px;
+    box-shadow: 0 6px 16px rgba(13,71,161,.04);
+  }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .tile {
+    background: white; border: 0; border-radius: 16px; min-height: 104px; text-align: left; cursor: pointer;
+    padding: 14px; box-shadow: 0 8px 20px rgba(13,71,161,.06); color: var(--ink);
+  }
+  .tile .bub {
+    width: 36px; height: 36px; border-radius: 12px; background: var(--ice); color: var(--blue);
+    display: grid; place-items: center; margin-bottom: 10px;
+  }
+  .tile b { display: block; font-size: 14px; line-height: 1.25; }
+  .sec { margin: 18px 0 8px; font-size: 15px; font-weight: 700; }
+  .med {
+    width: 100%; border: 0; background: white; border-radius: 14px; padding: 12px 12px;
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; text-align: left;
+    box-shadow: 0 4px 12px rgba(13,71,161,.04);
+  }
+  .med .nm { flex: 1; }
+  .med b { display: block; font-size: 14px; }
+  .med small { color: var(--muted); font-size: 12px; }
+  .pill {
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 4px 8px; white-space: nowrap;
+  }
+  .pill.g { background: var(--green-bg); color: var(--green); }
+  .pill.y { background: var(--amber-bg); color: var(--amber); }
+  .pill.o { background: var(--orange-bg); color: var(--orange); }
+
+  .backrow { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .back {
+    width: 36px; height: 36px; border-radius: 12px; border: 0; background: white; cursor: pointer; color: var(--navy);
+    display: grid; place-items: center; box-shadow: 0 4px 10px rgba(13,71,161,.05);
+  }
+  .backrow h2 { font-size: 20px; font-weight: 800; }
+  .filters { display: flex; flex-direction: column; gap: 8px; }
+  .sel {
+    background: white; border-radius: 12px; border: 1px solid var(--line); padding: 8px 12px 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sel small { display: block; color: var(--soft); font-size: 11px; font-weight: 600; letter-spacing: .02em; }
+  .sel b { font-size: 14px; font-weight: 600; }
+  .btn.gap { margin-top: 14px; }
+  .note { margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  .card {
+    background: white; border-radius: 16px; padding: 14px; margin-bottom: 10px;
+    box-shadow: 0 8px 18px rgba(13,71,161,.05); border: 0; width: 100%; text-align: left; cursor: pointer;
+  }
+  .card .hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card h3 { font-size: 16px; margin: 0 0 6px; }
+  .meta { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot.g { background: #2E7D32; } .dot.y { background: #F9A825; } .dot.o { background: #EF6C00; }
+  .pct { margin: 10px 0 8px; display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .pct b { color: var(--ink); font-size: 18px; }
+  .bar { height: 8px; background: #EEF2F6; border-radius: 99px; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 99px; background: var(--blue); }
+  .bar.y span { background: #F9A825; } .bar.o span { background: #EF6C00; } .bar.g span { background: #2E7D32; }
+  .more { margin-top: 10px; color: var(--blue); font-size: 13px; font-weight: 700; }
+
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi { background: white; border-radius: 14px; padding: 12px; box-shadow: 0 6px 14px rgba(13,71,161,.04); }
+  .kpi small { color: var(--soft); font-size: 11px; font-weight: 600; }
+  .kpi b { display: block; margin-top: 4px; font-size: 16px; }
+  .panel {
+    margin-top: 10px; background: white; border-radius: 16px; padding: 12px 12px 8px;
+    box-shadow: 0 8px 18px rgba(13,71,161,.05);
+  }
+  .panel h3 { font-size: 13px; margin: 0 0 6px; }
+  .loc { display: flex; align-items: center; gap: 8px; margin: 7px 0; font-size: 13px; font-weight: 600; }
+  .loc .bar { flex: 1; }
+  .loc em { font-style: normal; width: 36px; text-align: right; color: var(--muted); font-size: 12px; }
+  .chips { display: flex; gap: 8px; margin-bottom: 12px; }
+  .chip {
+    border: 1px solid #D6E3F5; background: white; color: var(--navy); border-radius: 999px;
+    padding: 7px 10px; font: 600 11px Inter, sans-serif; cursor: pointer;
+  }
+  .chip.on { background: var(--blue); color: white; border-color: var(--blue); }
+  .alert {
+    width: 100%; text-align: left; background: white; border: 0; border-radius: 16px; padding: 14px;
+    display: flex; gap: 10px; align-items: center; margin-bottom: 10px; cursor: pointer;
+    box-shadow: 0 6px 16px rgba(13,71,161,.05); border-left: 5px solid var(--blue);
+  }
+  .alert.o { border-left-color: #EF6C00; } .alert.y { border-left-color: #F9A825; } .alert.g { border-left-color: #2E7D32; }
+  .alert b { display: block; font-size: 15px; }
+  .alert small { color: var(--muted); font-weight: 600; }
+  .time { list-style: none; margin: 4px 0 0; padding: 0; }
+  .time li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; }
+  .rail { display: flex; flex-direction: column; align-items: center; }
+  .ck {
+    width: 22px; height: 22px; border-radius: 50%; background: #E7F6EC; color: var(--green);
+    display: grid; place-items: center; font-size: 12px; font-weight: 800;
+  }
+  .rail .ln { width: 2px; flex: 1; background: #CDEAD7; min-height: 18px; }
+  .time li p { padding-bottom: 10px; }
+  .time b { display: block; font-size: 14px; }
+  .time small { color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+  .stat { background: white; border-radius: 14px; padding: 10px 8px; text-align: center; box-shadow: 0 6px 14px rgba(13,71,161,.04); }
+  .stat small { display: block; color: var(--soft); font-size: 10px; font-weight: 700; }
+  .stat b { display: block; margin-top: 4px; font-size: 14px; }
+  .who { text-align: center; margin-top: 8px; }
+  .who .avatar { width: 72px; height: 72px; margin: 0 auto 10px; font-size: 22px; }
+  .who h2 { font-size: 22px; }
+  .who p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .list { margin-top: 16px; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 18px rgba(13,71,161,.05); }
+  .list div, .list button {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 14px; background: white; border: 0; border-bottom: 1px solid #EEF2F6;
+    font: 600 14px Inter, sans-serif; color: var(--ink); cursor: pointer; text-align: left;
+  }
+  .list div span, .list button span { color: var(--muted); font-weight: 500; font-size: 13px; }
+  .out {
+    margin-top: 14px; width: 100%; height: 48px; border-radius: 12px; border: 1px solid #E57373;
+    background: white; color: #C62828; font: 700 14px Inter, sans-serif; cursor: pointer;
+  }
+
+  body[data-mode="proto"] { background: #0e1726; }
+  body[data-mode="proto"] .grid { display: block; padding: 24px; }
+  body[data-mode="proto"] .device { display: none; }
+  body[data-mode="proto"] .device.active { display: block; width: 393px; margin: 0 auto; }
+  body[data-mode="proto"] .cap { color: #BBDEFB; text-align: center; }
+  html.solo .toolbar, html.solo .cap, html.solo .grid { display: contents; }
+  html.solo body, html.solo { background: transparent; }
+  html.solo .device { display: none; }
+  html.solo .device.show { display: block; }
+  html.solo .toolbar { display: none; }
+</style>
+</head>
+<body data-mode="gallery">
+  <div class="toolbar">
+    <div>
+      <b>SIMEC Bogotá</b>
+      <span>Prototipo de pantallas · iPhone 14 Pro · 393 × 852</span>
+    </div>
+    <div class="actions">
+      <button id="btn-gallery" class="on" type="button">Ver todas</button>
+      <button id="btn-proto" type="button">Prototipo navegable</button>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+const I = {
+  mail: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>',
+  lock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  eye: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80868B" stroke-width="1.8"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.8"><path d="M12 3l8 3v6c0 5-3.4 7.8-8 9-4.6-1.2-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>',
+  search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D47A1" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg>',
+  chev: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>'
+};
+function navIcon(kind, on) {
+  const c = on ? "#1565C0" : "#80868B";
+  const paths = {
+    home: '<path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-8.5z"/>',
+    search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-3.2-3.2"/>',
+    alert: '<path d="M12 4 3 19h18L12 4z"/><path d="M12 10v4M12 16.5h.01"/>',
+    user: '<circle cx="12" cy="8" r="3"/><path d="M5 19c1.5-3 3.8-4.5 7-4.5S17.5 16 19 19"/>'
+  };
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[kind]}</svg>`;
+}
+function tabs(active) {
+  const items = [["home","Inicio"],["search","Consultar"],["alert","Alertas"],["user","Perfil"]];
+  return `<nav class="tabs">${items.map(([k,l]) => `<button type="button" data-go="${k==="home"?"home":k==="search"?"consulta":k==="alert"?"alertas":"perfil"}" class="${active===k?"on":""}">${navIcon(k, active===k)}<span>${l}</span></button>`).join("")}</nav><div class="homebar"></div>`;
+}
+function status(dark) {
+  return `<div class="status"><span>9:41</span><div class="island"></div><span class="sigs"><svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="7" width="3" height="5" rx="0.5" fill="${dark?"white":"#111"}"/><rect x="4.5" y="5" width="3" height="7" rx="0.5" fill="${dark?"white":"#111"}"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.5" fill="${dark?"white":"#111"}"/><rect x="13.5" y="0" width="3" height="12" rx="0.5" fill="${dark?"white":"#111"}"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="${dark?"white":"#111"}" fill="none"/><rect x="2" y="2" width="16" height="8" rx="1.2" fill="${dark?"white":"#111"}"/><rect x="22.5" y="4" width="1.8" height="4" rx="0.5" fill="${dark?"white":"#111"}"/></svg></span></div>`;
+}
+const logo = (color) => `<svg class="mark" viewBox="0 0 180 180" aria-hidden="true">
+  <circle cx="90" cy="90" r="78" fill="none" stroke="${color}" stroke-width="3" opacity=".35"/>
+  <circle cx="90" cy="90" r="64" fill="${color}" opacity="${color==="#fff"?"0.12":"0.08"}"/>
+  <path d="M78 58h24v18h18v24h-18v18H78v-18H60V76h18V58z" fill="${color}"/>
+  <path d="M48 124h10v-16h8v16h8v-28h8v28h10" fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M40 132c8-10 14-8 18-16 4 10 10 6 16-8 5 14 12 8 18-2 4 8 10 6 16 2" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <path d="M46 146h88" stroke="${color}" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>`;
+const scene = `<svg class="scene" viewBox="0 0 220 168" aria-hidden="true">
+  <rect x="18" y="18" width="128" height="96" rx="14" fill="#fff" opacity=".96"/>
+  <rect x="30" y="32" width="46" height="8" rx="4" fill="#BBDEFB"/>
+  <polyline points="30,96 52,78 70,84 92,58 118,66 132,46" fill="none" stroke="#1565C0" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="132" cy="46" r="3.5" fill="#0D47A1"/>
+  <rect x="122" y="46" width="82" height="58" rx="12" fill="#E3F2FD"/>
+  <path d="M136 86c8-14 14-12 18-22 5 12 10 6 16-4 4 8 9 6 14 0" fill="none" stroke="#0D47A1" stroke-width="2"/>
+  <circle cx="150" cy="78" r="3" fill="#E65100"/><circle cx="168" cy="70" r="3" fill="#F9A825"/><circle cx="186" cy="74" r="3" fill="#2E7D32"/>
+  <rect x="36" y="122" width="54" height="28" rx="8" fill="#fff"/>
+  <rect x="44" y="130" width="22" height="8" rx="4" fill="#90CAF9"/>
+  <rect x="70" y="130" width="12" height="8" rx="2" fill="#1565C0"/>
+  <rect x="102" y="118" width="34" height="36" rx="8" fill="#fff"/>
+  <path d="M119 128v16M111 136h16" stroke="#0D47A1" stroke-width="2.4" stroke-linecap="round"/>
+  <rect x="146" y="112" width="52" height="22" rx="11" fill="#FFF3E0"/>
+  <circle cx="160" cy="123" r="4" fill="#EF6C00"/>
+  <rect x="168" y="120" width="22" height="6" rx="3" fill="#E65100" opacity=".7"/>
+</svg>`;
+
+const screens = {
+  splash: {
+    cap: "01_Splash",
+    html: `<div class="phone dark">${status(true)}
+      <div class="splash">
+        ${logo("#ffffff")}
+        <h1>SIMEC</h1>
+        <div class="city">Bogotá</div>
+        <p class="sub">Sistema de Monitoreo de Medicamentos Crónicos</p>
+        ${scene}
+        <p class="msg">Monitoreando la disponibilidad de medicamentos para diabetes e hipertensión</p>
+        <div class="dots"><i></i><i></i><i></i></div>
+        <footer>Versión Académica 2026</footer>
+      </div>
+      <div class="homebar"></div>
+    </div>`
+  },
+  login: {
+    cap: "02_Login",
+    html: `<div class="phone">${status(false)}
+      <div class="login">
+        ${logo("#1565C0")}
+        <h1>SIMEC</h1>
+        <div class="city">Bogotá</div>
+        <p class="sub">Sistema de Monitoreo de Medicamentos Crónicos</p>
+        <div class="field">${I.mail}<span>Correo electrónico</span></div>
+        <div class="field">${I.lock}<span>Contraseña</span>${I.eye}</div>
+        <div class="rowopt"><div class="check"><div class="box">✓</div>Recordarme</div><button class="link" type="button">¿Olvidaste tu contraseña?</button></div>
+        <button class="btn" type="button" data-go="home">Iniciar sesión</button>
+        <div class="sep"><i></i><span>o</span><i></i></div>
+        <button class="btn ghost" type="button" data-go="home">${I.shield} Acceso institucional</button>
+        <p class="help">¿Necesitas acceso al sistema?<br>Contacta al administrador de la plataforma.</p>
+        <footer>SIMEC Bogotá v1.0<br>Proyecto Académico 2026</footer>
+        <svg class="skyline" viewBox="0 0 393 90" preserveAspectRatio="none"><path fill="#1565C0" d="M0 90V58h18V40h16v18h14V28h22v30h12V34h18v24h20V22h16v36h18V46h24v12h16V30h20v28h18V50h22v8h18V38h20V58h18V48h22v10h19V90z"/></svg>
+      </div>
+    </div>`
+  },
+  home: {
+    cap: "03_Home",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="top"><div><div class="hello">Hola,</div><h2>Administrador</h2></div><button class="avatar" type="button" data-go="perfil">AD</button></div>
+        <div class="search">${I.search}<span>Buscar medicamento...</span></div>
+        <div class="tiles">
+          <button class="tile" type="button" data-go="consulta"><div class="bub">${navIcon("search", true)}</div><b>Consultar disponibilidad</b></button>
+          <button class="tile" type="button" data-go="alertas"><div class="bub">${navIcon("alert", true)}</div><b>Alertas</b></button>
+          <button class="tile" type="button" data-go="perfil"><div class="bub"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.8"><path d="M4 19V5h16v14"/><path d="M8 15v-3M12 15V8M16 15v-5"/></svg></div><b>Reportes</b></button>
+          <button class="tile" type="button" data-go="perfil"><div class="bub"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="1.8"><path d="M8 7h11M8 12h11M8 17h11"/><circle cx="4" cy="7" r="1" fill="#1565C0"/><circle cx="4" cy="12" r="1" fill="#1565C0"/><circle cx="4" cy="17" r="1" fill="#1565C0"/></svg></div><b>Historial</b></button>
+        </div>
+        <div class="sec">Medicamentos priorizados</div>
+        ${med("Metformina 850 mg","Antidiabético","72%","y","En monitorización")}
+        ${med("Insulina NPH","Antidiabético","34%","o","Riesgo")}
+        ${med("Losartán 50 mg","Antihipertensivo","91%","g","Disponible")}
+        ${med("Nifedipina 30 mg","Antihipertensivo","88%","g","Disponible")}
+      </div>
+      ${tabs("home")}
+    </div>`
+  },
+  consulta: {
+    cap: "04_Consulta",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="backrow"><button class="back" type="button" data-go="home">${I.back}</button><h2>Consulta de medicamentos</h2></div>
+        <div class="filters">
+          ${sel("Medicamento","Metformina 850 mg")}
+          ${sel("Grupo terapéutico","Diabetes")}
+          ${sel("Localidad","Suba")}
+          ${sel("EPS","Todas")}
+          ${sel("Estado","En monitorización")}
+        </div>
+        <button class="btn gap" type="button" data-go="resultados">Consultar</button>
+        <p class="note">Grupos: diabetes e hipertensión. Estados: disponible, en monitorización y riesgo de desabastecimiento.</p>
+      </div>
+      ${tabs("search")}
+    </div>`
+  },
+  resultados: {
+    cap: "05_Resultados",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="backrow"><button class="back" type="button" data-go="consulta">${I.back}</button><h2>Resultados</h2></div>
+        ${result("Metformina 850 mg","En monitorización","y","72")}
+        ${result("Losartán 50 mg","Disponible","g","91")}
+        ${result("Insulina NPH","Riesgo de desabastecimiento","o","34")}
+      </div>
+      ${tabs("search")}
+    </div>`
+  },
+  detalle: {
+    cap: "06_Detalle",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="backrow"><button class="back" type="button" data-go="resultados">${I.back}</button><h2>Metformina 850 mg</h2></div>
+        <div class="kpis">
+          <div class="kpi"><small>Categoría</small><b>Antidiabético</b></div>
+          <div class="kpi"><small>Estado</small><b style="color:#B26A00">En monitorización</b></div>
+          <div class="kpi"><small>Disponibilidad</small><b>72%</b></div>
+          <div class="kpi"><small>Actualización</small><b>7 nov 2026</b></div>
+        </div>
+        <div class="panel">
+          <h3>Disponibilidad últimos 30 días</h3>
+          <svg viewBox="0 0 320 120" width="100%" height="110">
+            <path d="M20 96H300M20 68H300M20 40H300" stroke="#E6EEF6" stroke-width="1"/>
+            <text x="0" y="44" font-size="9" fill="#9AA0A6">100</text>
+            <text x="4" y="72" font-size="9" fill="#9AA0A6">70</text>
+            <text x="8" y="100" font-size="9" fill="#9AA0A6">40</text>
+            <polyline points="24,58 70,50 110,62 150,48 190,55 230,60 280,52" fill="none" stroke="#1565C0" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="280" cy="52" r="4" fill="#0D47A1"/>
+            <text x="24" y="116" font-size="9" fill="#9AA0A6">1 oct</text>
+            <text x="250" y="116" font-size="9" fill="#9AA0A6">30 días</text>
+          </svg>
+        </div>
+        <div class="panel">
+          <h3>Localidades críticas</h3>
+          ${loc("Suba", 48)} ${loc("Kennedy", 41)} ${loc("Bosa", 36)}
+        </div>
+        <div class="panel">
+          <h3>Instituciones reportantes</h3>
+          ${loc("IPS A", 70)} ${loc("IPS B", 74)} ${loc("IPS C", 68)}
+        </div>
+        <button class="btn gap" type="button" data-go="seguimiento">Ver seguimiento</button>
+      </div>
+      ${tabs("search")}
+    </div>`
+  },
+  seguimiento: {
+    cap: "07_Seguimiento",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="backrow"><button class="back" type="button" data-go="detalle">${I.back}</button><h2>Seguimiento</h2></div>
+        <p class="note" style="margin-top:0">Metformina 850 mg · abastecimiento en Bogotá</p>
+        <div class="panel">
+          <ul class="time">
+            ${step("Reporte recibido","02 nov 2026", true)}
+            ${step("Validación institucional","03 nov 2026", true)}
+            ${step("Actualización de inventario","05 nov 2026", true)}
+            ${step("Monitoreo activo","En curso", false)}
+          </ul>
+        </div>
+        <div class="stats">
+          <div class="stat"><small>Disponibilidad</small><b>72%</b></div>
+          <div class="stat"><small>Tendencia</small><b>Estable</b></div>
+          <div class="stat"><small>Riesgo</small><b>Bajo</b></div>
+        </div>
+        <div class="panel">
+          <h3>Línea temporal de comportamiento</h3>
+          <svg viewBox="0 0 320 90" width="100%" height="84">
+            <polyline points="10,60 50,58 90,62 130,54 170,56 210,50 250,52 300,48" fill="none" stroke="#1565C0" stroke-width="3" stroke-linecap="round"/>
+            <path d="M10 60 50 58 90 62 130 54 170 56 210 50 250 52 300 48 V80 H10 Z" fill="#1565C0" opacity=".12"/>
+          </svg>
+        </div>
+      </div>
+      ${tabs("search")}
+    </div>`
+  },
+  alertas: {
+    cap: "08_Alertas",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="top"><div><div class="hello">Vigilancia</div><h2>Alertas</h2></div></div>
+        <div class="chips">
+          <button class="chip on" type="button">Por localidad</button>
+          <button class="chip" type="button">Por medicamento</button>
+          <button class="chip" type="button">Por estado</button>
+        </div>
+        ${alert("Insulina NPH","Riesgo alto","o","34%")}
+        ${alert("Metformina 850 mg","En monitorización","y","72%")}
+        ${alert("Losartán 50 mg","Disponible","g","91%")}
+        ${alert("Nifedipina 30 mg","Disponible","g","88%")}
+      </div>
+      ${tabs("alert")}
+    </div>`
+  },
+  perfil: {
+    cap: "09_Perfil",
+    html: `<div class="phone">${status(false)}
+      <div class="pad">
+        <div class="who">
+          <div class="avatar">AD</div>
+          <h2>Administrador</h2>
+          <p>Administrador de plataforma<br>Proyecto académico SIMEC</p>
+        </div>
+        <div class="list">
+          <div>Rol <span>Administrador</span></div>
+          <div>Correo <span>Institucional</span></div>
+          <button type="button" data-go="consulta">Historial de consultas <span>›</span></button>
+          <button type="button" data-go="alertas">Reportes y alertas <span>›</span></button>
+          <div>Versión <span>v1.0 · 2026</span></div>
+        </div>
+        <button class="out" type="button" data-go="login">Cerrar sesión</button>
+      </div>
+      ${tabs("user")}
+    </div>`
+  }
+};
+
+function med(name, cat, pct, tone, state) {
+  return `<button class="med" type="button" data-go="detalle"><div class="nm"><b>${name}</b><small>${cat}</small></div><span class="pill ${tone}">${state}</span>${I.chev}</button>`;
+}
+function sel(label, value) {
+  return `<div class="sel"><div><small>${label}</small><b>${value}</b></div>${I.chev}</div>`;
+}
+function result(name, state, tone, pct) {
+  return `<button class="card" type="button" data-go="detalle">
+    <div class="hd"><h3>${name}</h3><span class="pill ${tone}">${state}</span></div>
+    <div class="pct"><span>Disponibilidad</span><b>${pct}%</b></div>
+    <div class="bar ${tone}"><span style="width:${pct}%"></span></div>
+    <div class="more">Ver detalle</div>
+  </button>`;
+}
+function loc(name, pct) {
+  const tone = pct >= 80 ? "g" : pct >= 50 ? "y" : "o";
+  return `<div class="loc"><span style="width:72px">${name}</span><div class="bar ${tone}"><span style="width:${pct}%"></span></div><em>${pct}%</em></div>`;
+}
+function step(title, date, line) {
+  return `<li><div class="rail"><div class="ck">✓</div>${line ? '<div class="ln"></div>' : ""}</div><p><b>${title}</b><small>${date}</small></p></li>`;
+}
+function alert(name, state, tone, pct) {
+  return `<button class="alert ${tone}" type="button" data-go="detalle"><div style="flex:1"><b>${name}</b><small>${state}</small></div><span class="pill ${tone}">${pct}</span></button>`;
+}
+
+const grid = document.getElementById("grid");
+for (const [id, sc] of Object.entries(screens)) {
+  const el = document.createElement("section");
+  el.className = "device";
+  el.dataset.screen = id;
+  el.innerHTML = `<p class="cap">${sc.cap}</p>${sc.html}`;
+  grid.appendChild(el);
+}
+
+function go(id) {
+  document.querySelectorAll(".device").forEach(d => {
+    const on = d.dataset.screen === id;
+    d.classList.toggle("active", on);
+    d.classList.toggle("show", on);
+  });
+  if (id === "splash" && document.body.dataset.mode === "proto") {
+    clearTimeout(go._t);
+    go._t = setTimeout(() => go("login"), 2400);
+  }
+}
+document.body.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-go]");
+  if (!btn) return;
+  if (document.body.dataset.mode === "gallery" && !document.documentElement.classList.contains("solo")) return;
+  go(btn.dataset.go);
+});
+document.getElementById("btn-gallery").onclick = () => {
+  document.body.dataset.mode = "gallery";
+  document.getElementById("btn-gallery").classList.add("on");
+  document.getElementById("btn-proto").classList.remove("on");
+};
+document.getElementById("btn-proto").onclick = () => {
+  document.body.dataset.mode = "proto";
+  document.getElementById("btn-proto").classList.add("on");
+  document.getElementById("btn-gallery").classList.remove("on");
+  go("splash");
+};
+
+const solo = new URLSearchParams(location.search).get("solo");
+if (solo && screens[solo]) {
+  document.documentElement.classList.add("solo");
+  go(solo);
+}
+</script>
+</body>
+</html>
