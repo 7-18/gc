@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SIMEC Bogotá — Presentación</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --navy:#0D47A1; --blue:#1565C0; --ice:#E3F2FD; --ink:#1A2332; --muted:#5C6778; --line:#E2E8F0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #0b1424; font-family: Inter, "Segoe UI", sans-serif; color: var(--ink); }
+  .viewport { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; }
+  .slide { display: none; width: 1280px; height: 720px; background: #F4F7FB; padding: 48px 64px 40px; position: relative; overflow: hidden; }
+  .slide.on { display: block; }
+  .slide.cover {
+    background: linear-gradient(165deg, #0D47A1 0%, #1565C0 62%, #1E88E5 100%);
+    color: white; padding: 72px 80px;
+  }
+  .kicker { font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
+  .cover .kicker { color: #BBDEFB; }
+  h1 { font-size: 64px; line-height: .95; margin: 18px 0 12px; letter-spacing: -1.5px; font-weight: 800; }
+  .cover h2 { font-size: 28px; font-weight: 500; margin: 0; max-width: 760px; color: #E3F2FD; }
+  .cover .foot { position: absolute; left: 80px; bottom: 48px; color: #BBDEFB; font-size: 16px; line-height: 1.5; }
+  h2.t { font-size: 34px; margin: 8px 0 22px; letter-spacing: -.6px; }
+  .lead { font-size: 20px; line-height: 1.45; max-width: 980px; margin: 0 0 22px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .card { background: white; border-radius: 16px; padding: 16px 18px; border: 1px solid var(--line); }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p, .card li { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .card ol, .card ul { margin: 8px 0 0; padding-left: 18px; }
+  .num { width: 28px; height: 28px; border-radius: 8px; background: var(--ice); color: var(--navy); display: grid; place-items: center; font-weight: 800; font-size: 13px; margin-bottom: 8px; }
+  .obj { background: white; border-left: 6px solid var(--blue); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+  .obj b { display: block; font-size: 13px; color: var(--blue); letter-spacing: .04em; text-transform: uppercase; }
+  .obj p { margin: 4px 0 0; font-size: 18px; line-height: 1.35; }
+  ol.specs { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+  ol.specs li { background: white; border-radius: 12px; padding: 10px 12px; font-size: 15px; border: 1px solid var(--line); }
+  .rf { display: grid; grid-template-columns: 72px 1fr 70px; gap: 8px 12px; align-items: center; background: white; border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; margin-bottom: 7px; }
+  .rf b { color: var(--navy); font-size: 14px; }
+  .rf strong { display: block; font-size: 14px; }
+  .rf span { display: block; color: var(--muted); font-size: 13px; line-height: 1.3; }
+  .tag { justify-self: end; background: var(--ice); color: var(--navy); font-size: 11px; font-weight: 800; border-radius: 99px; padding: 4px 8px; }
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .flow span, .flow i { background: white; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; font-style: normal; font-weight: 700; font-size: 14px; }
+  .flow em { color: var(--blue); font-weight: 800; }
+  .arch { display: grid; grid-template-columns: 220px 1fr 220px; gap: 14px; align-items: stretch; }
+  .col { background: white; border-radius: 16px; padding: 14px; border: 1px solid var(--line); }
+  .col h3 { margin: 0 0 8px; font-size: 14px; color: var(--navy); }
+  .box { background: var(--ice); border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; font-weight: 650; font-weight: 700; }
+  .stack { display: flex; flex-direction: column; gap: 8px; }
+  .layer { border-radius: 14px; padding: 12px 14px; color: white; }
+  .layer b { display: block; font-size: 14px; }
+  .layer span { font-size: 13px; opacity: .92; }
+  .l1 { background: #0D47A1; } .l2 { background: #1565C0; } .l3 { background: #1E88E5; } .l4 { background: #42A5F5; }
+  .mods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { background: #E3F2FD; color: var(--navy); font-size: 12px; letter-spacing: .04em; }
+  .phones { display: flex; justify-content: space-between; gap: 8px; }
+  .mini { width: 168px; text-align: center; }
+  .mini .frame { width: 168px; height: 364px; overflow: hidden; border-radius: 18px; box-shadow: 0 10px 24px rgba(13,71,161,.15); background: white; }
+  .mini iframe { width: 393px; height: 852px; border: 0; transform: scale(.427); transform-origin: top left; pointer-events: none; }
+  .mini figcaption { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .bar { position: absolute; left: 64px; right: 64px; bottom: 16px; display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .cover .bar { color: #BBDEFB; left: 80px; right: 80px; }
+  .navhit { position: fixed; top: 0; bottom: 0; width: 12%; z-index: 5; cursor: pointer; }
+  .navhit.r { right: 0; } .navhit.l { left: 0; }
+  @media print {
+    body { background: white; }
+    .viewport { position: static; transform: none !important; }
+    .slide { display: block !important; page-break-after: always; }
+    .navhit { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="viewport" id="deck">
+
+<section class="slide cover on">
+  <div class="kicker">Proyecto académico 2026</div>
+  <h1>SIMEC<br>Bogotá</h1>
+  <h2>Sistema de Monitoreo de Medicamentos Crónicos para diabetes e hipertensión</h2>
+  <div class="foot">Aplicación móvil y plataforma web<br>Vigilancia del abastecimiento farmacéutico en Bogotá</div>
+  <div class="bar"><span>SIMEC Bogotá</span><span>1 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Descripción</div>
+  <h2 class="t">Qué es SIMEC Bogotá</h2>
+  <p class="lead">Plataforma móvil y web para vigilar la disponibilidad de medicamentos usados en diabetes mellitus e hipertensión arterial, y para anticipar riesgos de desabastecimiento en Bogotá.</p>
+  <div class="grid3">
+    <div class="card"><div class="num">1</div><h3>Consultar</h3><p>Disponibilidad por medicamento, localidad y entidad de salud.</p></div>
+    <div class="card"><div class="num">2</div><h3>Seguir</h3><p>Comportamiento del inventario y tendencia de los últimos 30 días.</p></div>
+    <div class="card"><div class="num">3</div><h3>Alertar</h3><p>Aviso temprano cuando un medicamento entra en monitorización o en riesgo.</p></div>
+  </div>
+  <div class="card" style="margin-top:16px"><p>La solución apoya a instituciones de salud, EPS, IPS y entidades de gestión farmacéutica. Centraliza el estado de medicamentos esenciales para sostener la continuidad de los tratamientos crónicos.</p></div>
+  <div class="bar"><span>Descripción general</span><span>2 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Problema</div>
+  <h2 class="t">Por qué hace falta monitorear el abastecimiento</h2>
+  <p class="lead">Diabetes e hipertensión exigen tratamiento continuo. Si el medicamento no está disponible, se interrumpe el cuidado y aumenta el riesgo para la salud pública.</p>
+  <div class="grid3">
+    <div class="card"><h3>Cadena de suministro</h3><p>Fallos entre producción, distribución y punto de atención.</p></div>
+    <div class="card"><h3>Demanda</h3><p>Aumento de pacientes que requieren el mismo tratamiento.</p></div>
+    <div class="card"><h3>Distribución</h3><p>Retrasos para llegar a las localidades de la ciudad.</p></div>
+    <div class="card"><h3>Importación</h3><p>Dificultades para ingresar medicamentos al país.</p></div>
+    <div class="card"><h3>Inventario</h3><p>Existencias insuficientes frente al consumo real.</p></div>
+    <div class="card"><h3>Alertas sanitarias</h3><p>Eventos que restringen el uso o la circulación de un producto.</p></div>
+  </div>
+  <div class="bar"><span>Problemática</span><span>3 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Objetivos</div>
+  <h2 class="t">Para qué se diseña el sistema</h2>
+  <div class="obj"><b>Objetivo general</b><p>Diseñar un sistema de información móvil y web que monitoree la disponibilidad de medicamentos para diabetes e hipertensión en Bogotá, y que facilite la consulta, el seguimiento y las alertas tempranas.</p></div>
+  <ol class="specs">
+    <li>Consultar disponibilidad por localidad y entidad de salud.</li>
+    <li>Identificar medicamentos en monitorización o en riesgo.</li>
+    <li>Ofrecer información actualizada para decidir.</li>
+    <li>Generar alertas tempranas de medicamentos críticos.</li>
+    <li>Visualizar indicadores en paneles de control.</li>
+    <li>Ordenar la información de medicamentos de uso crónico.</li>
+  </ol>
+  <div class="bar"><span>Objetivos</span><span>4 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Actores</div>
+  <h2 class="t">Quién usa SIMEC</h2>
+  <div class="grid4">
+    <div class="card"><h3>Administradores</h3><p>Miran indicadores, gestionan alertas y consultan reportes consolidados.</p></div>
+    <div class="card"><h3>Entidades de salud</h3><p>IPS, EPS y centros que necesitan la disponibilidad actualizada.</p></div>
+    <div class="card"><h3>Personal sanitario</h3><p>Profesionales que siguen tratamientos farmacológicos.</p></div>
+    <div class="card"><h3>Vigilancia</h3><p>Organismos que analizan y controlan la disponibilidad.</p></div>
+  </div>
+  <h2 class="t" style="font-size:22px;margin-top:22px">Medicamentos del alcance inicial</h2>
+  <div class="grid2">
+    <div class="card"><h3>Diabetes</h3><p>Metformina 850 mg · Insulina NPH · Insulina glargina · Otros antidiabéticos priorizados</p></div>
+    <div class="card"><h3>Hipertensión</h3><p>Losartán 50 mg · Nifedipina 30 mg · Otros antihipertensivos priorizados</p></div>
+  </div>
+  <div class="bar"><span>Usuarios y medicamentos</span><span>5 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Diseño móvil</div>
+  <h2 class="t">Pantallas 01 a 05</h2>
+  <div class="phones">
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=splash" title="Splash"></iframe></div><figcaption>01 Splash</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=login" title="Login"></iframe></div><figcaption>02 Login</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=home" title="Inicio"></iframe></div><figcaption>03 Inicio</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=consulta" title="Consulta"></iframe></div><figcaption>04 Consulta</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=resultados" title="Resultados"></iframe></div><figcaption>05 Resultados</figcaption></figure>
+  </div>
+  <div class="bar"><span>iPhone 14 Pro · 393 × 852 · azul institucional</span><span>6 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Diseño móvil</div>
+  <h2 class="t">Pantallas 06 a 09</h2>
+  <div class="phones" style="justify-content:center;gap:28px">
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=detalle" title="Detalle"></iframe></div><figcaption>06 Detalle</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=seguimiento" title="Seguimiento"></iframe></div><figcaption>07 Seguimiento</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=alertas" title="Alertas"></iframe></div><figcaption>08 Alertas</figcaption></figure>
+    <figure class="mini"><div class="frame"><iframe src="pantallas.html?solo=perfil" title="Perfil"></iframe></div><figcaption>09 Perfil</figcaption></figure>
+  </div>
+  <div class="bar"><span>Los PNG de cada pantalla están en la carpeta png</span><span>7 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Navegación</div>
+  <h2 class="t">Flujo de la aplicación</h2>
+  <div class="card" style="margin-bottom:16px">
+    <div class="flow">
+      <span>Splash</span><em>→</em><span>Login</span><em>→</em><span>Inicio</span><em>→</em><span>Consulta</span><em>→</em><span>Resultados</span><em>→</em><span>Detalle</span><em>→</em><span>Seguimiento</span>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Desde inicio</h3><p>Alertas, reportes, historial y perfil. El menú inferior permanece en inicio, consultar, alertas y perfil.</p></div>
+    <div class="card"><h3>Transiciones</h3><p>El splash pasa solo al login. Iniciar sesión abre el inicio. Consultar abre resultados. Ver detalle y Ver seguimiento continúan la cadena.</p></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Estructura de pantallas</h3><p>01 Splash · 02 Login · 03 Home · 04 Consulta · 05 Resultados · 06 Detalle · 07 Seguimiento · 08 Alertas · 09 Perfil</p></div>
+  <div class="bar"><span>Flujo</span><span>8 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Requisitos funcionales</div>
+  <h2 class="t">Acceso y inicio</h2>
+  <div class="rf"><b>RF-01</b><div><strong>Pantalla de apertura</strong><span>Al abrir la app muestra SIMEC Bogotá y pasa sola al inicio de sesión.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-02</b><div><strong>Iniciar sesión</strong><span>Autentica con correo electrónico y contraseña institucionales.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-03</b><div><strong>Recordar sesión</strong><span>Permite mantener la sesión en el dispositivo.</span></div><span class="tag">Media</span></div>
+  <div class="rf"><b>RF-04</b><div><strong>Recuperar contraseña</strong><span>Ofrece la solicitud de recuperación desde el login.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-05</b><div><strong>Acceso institucional</strong><span>Habilita un ingreso alterno para personal de entidades de salud.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-06</b><div><strong>Menú principal</strong><span>Expone consulta, alertas, reportes e historial, más el menú inferior.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-07</b><div><strong>Búsqueda</strong><span>Busca un medicamento por nombre desde el inicio.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-08</b><div><strong>Priorizados</strong><span>Muestra Metformina 850 mg, Insulina NPH, Losartán 50 mg y Nifedipina 30 mg.</span></div><span class="tag">Alta</span></div>
+  <div class="bar"><span>Requisitos funcionales</span><span>9 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Requisitos funcionales</div>
+  <h2 class="t">Consulta, detalle y seguimiento</h2>
+  <div class="rf"><b>RF-09</b><div><strong>Consulta filtrada</strong><span>Filtra por medicamento, grupo terapéutico, localidad, EPS y estado.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-10</b><div><strong>Resultados</strong><span>Lista nombre, estado y porcentaje de disponibilidad, con acceso al detalle.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-11</b><div><strong>Clasificación</strong><span>Asigna Disponible, En monitorización o Riesgo de desabastecimiento.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-12</b><div><strong>Detalle</strong><span>Muestra categoría, estado, porcentaje, gráfico de 30 días, localidades críticas e IPS reportantes.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-13</b><div><strong>Seguimiento</strong><span>Recorre reporte recibido, validación, actualización de inventario y monitoreo activo.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-14</b><div><strong>Indicadores</strong><span>Informa disponibilidad actual, tendencia y nivel de riesgo.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-15</b><div><strong>Historial</strong><span>Guarda y permite revisar las consultas realizadas.</span></div><span class="tag">Media</span></div>
+  <div class="rf"><b>RF-16</b><div><strong>Perfil y salida</strong><span>Muestra el usuario autenticado y permite cerrar la sesión.</span></div><span class="tag">Alta</span></div>
+  <div class="bar"><span>Requisitos funcionales</span><span>10 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Requisitos funcionales</div>
+  <h2 class="t">Alertas, reportes y plataforma web</h2>
+  <div class="rf"><b>RF-17</b><div><strong>Alertas</strong><span>Lista medicamentos con riesgo alto, en monitorización o disponibles.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-18</b><div><strong>Filtros de alerta</strong><span>Filtra por localidad, medicamento y estado.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-19</b><div><strong>Reportes móviles</strong><span>Consulta resúmenes de disponibilidad desde la aplicación.</span></div><span class="tag">Media</span></div>
+  <div class="rf"><b>RF-20</b><div><strong>Tablero web</strong><span>Cuenta monitoreados, disponibles, en monitorización y en riesgo.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-21</b><div><strong>Mapa de Bogotá</strong><span>Muestra la situación por localidades: Suba, Kennedy, Bosa, Engativá y Teusaquillo.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-22</b><div><strong>Reportes consolidados</strong><span>Genera análisis para la toma de decisiones institucionales.</span></div><span class="tag">Alta</span></div>
+  <div class="rf"><b>RF-23</b><div><strong>Umbrales</strong><span>El administrador define los criterios que disparan una alerta temprana.</span></div><span class="tag">Media</span></div>
+  <div class="rf"><b>RF-24</b><div><strong>Reporte de inventario</strong><span>Las entidades registran actualizaciones que alimentan el monitoreo.</span></div><span class="tag">Alta</span></div>
+  <div class="bar"><span>Requisitos funcionales</span><span>11 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Arquitectura</div>
+  <h2 class="t">Contexto del sistema</h2>
+  <div class="arch">
+    <div class="col"><h3>Actores</h3>
+      <div class="box">Administrador</div>
+      <div class="box">Entidad de salud</div>
+      <div class="box">Personal sanitario</div>
+      <div class="box">Entidad de vigilancia</div>
+    </div>
+    <div class="col"><h3>SIMEC Bogotá</h3>
+      <div class="stack">
+        <div class="layer l1"><b>Aplicación móvil</b><span>Consulta, alertas, seguimiento y reportes básicos</span></div>
+        <div class="layer l2"><b>Portal web administrativo</b><span>Indicadores, mapa, umbrales y reportes</span></div>
+        <div class="layer l3"><b>Servicios</b><span>Autenticación, disponibilidad, alertas y reportes</span></div>
+      </div>
+    </div>
+    <div class="col"><h3>Información de entrada</h3>
+      <div class="box">Reportes de inventario</div>
+      <div class="box">Catálogo de medicamentos</div>
+      <div class="box">Localidades de Bogotá</div>
+      <div class="box">Entidades reportantes</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px"><p>El personal consulta y recibe alertas. Las entidades alimentan el inventario. El sistema calcula el estado y deja la evidencia lista para decidir.</p></div>
+  <div class="bar"><span>Arquitectura de contexto</span><span>12 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Arquitectura</div>
+  <h2 class="t">Capas y módulos</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="layer l1"><b>Presentación</b><span>App móvil iOS/Android y portal web</span></div>
+      <div class="layer l2"><b>Aplicación</b><span>API de servicios consumida por ambos clientes</span></div>
+      <div class="layer l3"><b>Dominio</b><span>Reglas de estado, alertas, seguimiento y reportes</span></div>
+      <div class="layer l4"><b>Datos</b><span>Repositorio relacional de medicamentos, registros y usuarios</span></div>
+    </div>
+    <div class="mods">
+      <div class="card"><h3>Autenticación</h3><p>Sesión, recuperación y acceso institucional.</p></div>
+      <div class="card"><h3>Catálogo</h3><p>Medicamentos, grupos y priorización.</p></div>
+      <div class="card"><h3>Disponibilidad</h3><p>Consulta, detalle y serie de 30 días.</p></div>
+      <div class="card"><h3>Seguimiento</h3><p>Línea de tiempo del abastecimiento.</p></div>
+      <div class="card"><h3>Alertas</h3><p>Clasificación y filtros de riesgo.</p></div>
+      <div class="card"><h3>Reportes</h3><p>Indicadores, mapa y consolidados.</p></div>
+    </div>
+  </div>
+  <div class="bar"><span>Arquitectura lógica</span><span>13 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Arquitectura</div>
+  <h2 class="t">Información y regla de estado</h2>
+  <table>
+    <thead><tr><th>Entidad</th><th>Guarda</th></tr></thead>
+    <tbody>
+      <tr><td>Usuario</td><td>Identidad, rol y entidad a la que pertenece</td></tr>
+      <tr><td>Medicamento</td><td>Nombre, presentación, grupo y categoría terapéutica</td></tr>
+      <tr><td>Registro de disponibilidad</td><td>Porcentaje, fecha, localidad y entidad reportante</td></tr>
+      <tr><td>Alerta</td><td>Nivel, medicamento, localidad y fecha de detección</td></tr>
+      <tr><td>Consulta</td><td>Filtros usados, usuario y fecha, para el historial</td></tr>
+    </tbody>
+  </table>
+  <div class="grid3" style="margin-top:14px">
+    <div class="card"><h3>Disponible</h3><p>Disponibilidad igual o mayor a 80%. Ejemplo: Losartán 50 mg, 91%.</p></div>
+    <div class="card"><h3>En monitorización</h3><p>Entre 50% y 79%. Ejemplo: Metformina 850 mg, 72%.</p></div>
+    <div class="card"><h3>Riesgo</h3><p>Menor a 50%. Ejemplo: Insulina NPH, 34%.</p></div>
+  </div>
+  <div class="bar"><span>Criterio de clasificación del prototipo</span><span>14 / 16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Cierre</div>
+  <h2 class="t">Qué aporta el proyecto</h2>
+  <div class="grid2">
+    <div class="card"><h3>Visibilidad</h3><p>El estado de los medicamentos deja de estar disperso entre entidades.</p></div>
+    <div class="card"><h3>Anticipación</h3><p>El riesgo se identifica antes de que se interrumpa el tratamiento.</p></div>
+    <div class="card"><h3>Decisión</h3><p>Indicadores, mapa y reportes sostienen la gestión.</p></div>
+    <div class="card"><h3>Continuidad</h3><p>El monitoreo protege tratamientos de diabetes e hipertensión.</p></div>
+  </div>
+  <div class="obj" style="margin-top:16px"><b>Conclusión</b><p>SIMEC Bogotá propone la transformación digital del monitoreo farmacéutico en la ciudad: consultar disponibilidad, reconocer el desabastecimiento y emitir alertas tempranas desde una aplicación móvil y un tablero web.</p></div>
+  <div class="bar"><span>Beneficios</span><span>15 / 16</span></div>
+</section>
+
+<section class="slide cover">
+  <div class="kicker">SIMEC Bogotá</div>
+  <h1>Monitoreo para continuar el tratamiento</h1>
+  <h2>Diabetes e hipertensión · Disponibilidad, seguimiento y alerta temprana</h2>
+  <div class="foot">Proyecto académico 2026<br>Flechas del teclado para recorrer la presentación · Ctrl+P para PDF</div>
+  <div class="bar"><span>Gracias</span><span>16 / 16</span></div>
+</section>
+
+</div>
+<div class="navhit l" id="prev"></div>
+<div class="navhit r" id="next"></div>
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let i = 0;
+function show(n) {
+  i = (n + slides.length) % slides.length;
+  slides.forEach((s, k) => s.classList.toggle("on", k === i));
+}
+function fit() {
+  const sc = Math.min(innerWidth / 1280, innerHeight / 720);
+  document.getElementById("deck").style.transform = `translate(-50%, -50%) scale(${sc})`;
+}
+addEventListener("resize", fit);
+addEventListener("keydown", (e) => {
+  if (["ArrowRight","PageDown"," "].includes(e.key)) { e.preventDefault(); show(i+1); }
+  if (["ArrowLeft","PageUp","Backspace"].includes(e.key)) { e.preventDefault(); show(i-1); }
+});
+document.getElementById("next").onclick = () => show(i+1);
+document.getElementById("prev").onclick = () => show(i-1);
+fit();
+</script>
+</body>
+</html>
